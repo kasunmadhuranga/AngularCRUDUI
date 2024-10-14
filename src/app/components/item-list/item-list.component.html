@@ -1,0 +1,25 @@
+<div class="container mt-1">
+    <h2 class="text-center mb-4">Item List</h2>
+
+    <form (submit)="onSubmit()" class="mb-4 d-flex">
+        <input type="text" [(ngModel)]="newItem.name" name="itemName" placeholder="Add new item" required
+            class="form-control me-2" />
+        <button type="submit" class="btn btn-primary">Add Item</button>
+    </form>
+
+    <div class="list-group">
+        <div *ngFor="let item of items$ | async"
+            class="list-group-item d-flex justify-content-between align-items-center">
+            <span *ngIf="!isEditing(item.id)" class="item-name">{{ item.name }}</span>
+            <input *ngIf="isEditing(item.id)" type="text" [(ngModel)]="item.name" class="form-control" />
+            <div>
+
+                <button (click)="isEditing(item.id) ? updateItem(item) : onEdit(item.id)" class="btn btn-secondary btn-sm me-2">
+                    {{ isEditing(item.id) ? 'Save' : 'Edit' }}
+                </button>
+
+                <button (click)="onDelete(item.id)" class="btn btn-danger btn-sm">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
